@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="sidebar">
+        <button id="closeNav" onclick="close_sidebar()">close &times;</button>
+    </div>
+
+    <div id="main">
+        <div id="map"></div>
+        <button id="openNav" onclick="open_sidebar()">&#9776; Menu</button>
+    </div>
+
+    <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=[API_KEY]&callback=initMap">
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
