@@ -29,6 +29,23 @@ function initMap(){
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
       }
+
+      const marker = new google.maps.Marker({
+        position:{lat: 37.9922, lng: -1.1307},
+        map:map,
+        icon:"public/assets/images/icons8-signal-32.png"
+        });
+
+        const cityCircle = new google.maps.Circle({
+          strokeColor: "#FF0000",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: "#FF0000",
+          fillOpacity: 0.35,
+          map,
+          center: {lat: 37.9922, lng: -1.1307},
+          radius: 4 * 1000,
+        });
 }
 
 function open_sidebar() {
