@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const transponderRoutes = require('./routes/transponderRoutes')
 const morgan = require('morgan')
 const swaggerUi = require('swagger-ui-express');
 require('dotenv').config()
@@ -10,10 +11,11 @@ const app = express()
 app.use(express.json())
 // morgan HTTP logger
 app.use(morgan('tiny'))
+app.set("view engine", "ejs");
 
 //Connect to the database
 mongoose.connect(
-    `mongodb+srv://emile:${process.env.PASSWORD}@${process.env.CLUSTER}.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, 
+    `mongodb+srv://emile:${process.env.PASSWORD}@${process.env.CLUSTER}.mongodb.net/${process.env.DB}?retryWrites=true&w=majority`, 
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -26,10 +28,13 @@ mongoose.connect(
   db.once("open", function () {
     console.log("Connected successfully");
   });
+app.use("/api/transponder", transponderRoutes);
 
+// app.use("/ui")
 app.get('/', (req, res) => {
     res.send('ok');
-  });
+    // res.render("index");
+});
 
 var port = process.env.PORT || 3000;
 app.listen(port, () => {
