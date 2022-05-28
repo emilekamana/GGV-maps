@@ -24,7 +24,7 @@ exports.create_transponder = async (req, res) => {
             radius
         })
         await transponder.save();
-        res.status(201).send(transponder);
+        res.redirect("/");
     } catch(error) {
         res.status(500).send(error);
     }
@@ -35,7 +35,7 @@ exports.delete_transponder = async (req,res) =>{
     try{
         const transponderId = req.params.transponderId
         await transponderModel.deleteOne({_id: transponderId});
-        res.status(204).send("Deleted");
+        res.redirect("/");
     }catch(error){
         res.status(500).send(error);
     }

@@ -9,6 +9,6 @@ router.get('/', uiController.list_transponders)
 router.post('/', uiController.create_transponder)
 
 // delete a transponder by ID
-router.delete('/:transponderId', uiController.delete_transponder)
+router.get('/:transponderId', uiController.delete_transponder)
 
 module.exports = router
