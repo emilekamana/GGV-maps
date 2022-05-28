@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const uiRoutes = require('./routes/uiRoutes')
 const transponderRoutes = require('./routes/transponderRoutes')
 const morgan = require('morgan')
 const swaggerUi = require('swagger-ui-express');
@@ -12,6 +13,8 @@ app.use(express.json())
 // morgan HTTP logger
 app.use(morgan('tiny'))
 app.set("view engine", "ejs");
+
+var port = process.env.PORT || 3000;
 
 //Connect to the database
 mongoose.connect(
@@ -30,13 +33,19 @@ mongoose.connect(
   });
 app.use("/api/transponder", transponderRoutes);
 
-// app.use("/ui")
-app.get('/', (req, res) => {
-    res.send('ok');
-    // res.render("index");
-});
-
-var port = process.env.PORT || 3000;
+app.use("/", uiRoutes)
+// app.get('/', (req, res) => {
+//     // res.send('ok');
+//     const transponders = await transponderModel.find({});
+//     try {
+//         res.render("index", {"transponders": transponders});
+//         // res.send();
+//       } catch (error) {
+//         res.status(500).send(error);
+//       }
+    
+// });
+app.use(express.static('public'));
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
 })
