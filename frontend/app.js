@@ -8,27 +8,27 @@ function initMap(){
     //New Map
     map = new google.maps.Map(document.getElementById("map"),options)
     infoWindow = new google.maps.InfoWindow();
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            infoWindow.setPosition(pos);
-            infoWindow.setContent("Location found.");
-            infoWindow.open(map);
-            map.setCenter(pos);
-          },
-          () => {
-            handleLocationError(true, infoWindow, map.getCenter());
-            console.log("Not located");
-          }
-        );
-      } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-      }
+    // if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(
+    //       (position) => {
+    //         const pos = {
+    //           lat: position.coords.latitude,
+    //           lng: position.coords.longitude,
+    //         };
+    //         infoWindow.setPosition(pos);
+    //         infoWindow.setContent("Location found.");
+    //         infoWindow.open(map);
+    //         map.setCenter(pos);
+    //       },
+    //       () => {
+    //         handleLocationError(true, infoWindow, map.getCenter());
+    //         console.log("Not located");
+    //       }
+    //     );
+    //   } else {
+    //     // Browser doesn't support Geolocation
+    //     handleLocationError(false, infoWindow, map.getCenter());
+    //   }
 
       const marker = new google.maps.Marker({
         position:{lat: 37.9922, lng: -1.1307},
