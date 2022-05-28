@@ -10,6 +10,7 @@ require('dotenv').config()
 const app = express()
 // JSON body parser 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true}));
 // morgan HTTP logger
 app.use(morgan('tiny'))
 app.set("view engine", "ejs");

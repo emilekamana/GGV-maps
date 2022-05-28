@@ -14,8 +14,15 @@ exports.list_transponders = async (req, res) => {
 
 // create a new transponder
 exports.create_transponder = async (req, res) => {
+    const {name,latitude,longitude,radius} = new transponderModel(req.body);
     try {
-        const transponder = new transponderModel(req.body);
+        console.log(name);
+        const transponder = new transponderModel({
+            name,
+            latitude,
+            longitude,
+            radius
+        })
         await transponder.save();
         res.status(201).send(transponder);
     } catch(error) {
