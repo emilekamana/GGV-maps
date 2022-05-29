@@ -15,8 +15,6 @@ async function initMap(){
   }
   map = new google.maps.Map(document.getElementById("map"),mapOptions)
 
-  newTransponder = document.createElement('div');
-
   // Check if there are trasponders
   if(typeof transponders == 'object' && transponders.length > 0){
     
@@ -61,6 +59,7 @@ async function initMap(){
           infowindow.open(map, marker);
         }
       })(marker));
+      newTransponder = document.createElement('div');
 
       // Markup for listing transponder on side bar  
       newTransponder.innerHTML =`<div class="card text-bg-light mt-2 mb-2 mx-auto" style="max-width: 95%;">
@@ -70,6 +69,8 @@ async function initMap(){
         </div>
         </div>
         `
+      
+      document.getElementById('transponders').appendChild(newTransponder);
       // Add listeners to show clicked transponder on the map
       newTransponder.addEventListener("click", function(){
         infowindow.setContent(transponder.name+ "<br>" +transponder.latitude + "\u00B0 N," + transponder.longitude + "\u00B0 E"  + "<br>radius:" + transponder.radius + "m");
@@ -79,15 +80,17 @@ async function initMap(){
       }, false);
     })
   }else{
+    newTransponder = document.createElement('div');
   // Markup for when there are no transponders
-  newTransponder.innerHTML =`<div class="card text-bg-light mt-2 mb-2 mx-auto" style="max-width: 95%;">
+    newTransponder.innerHTML =`<div class="card text-bg-light mt-2 mb-2 mx-auto" style="max-width: 95%;">
         <div class="card-body">
           <p class="card-text">No transponders added yet!</p>
         </div>
         </div>
         `
+  
+    document.getElementById('transponders').appendChild(newTransponder);
   }
-  document.getElementById('transponders').appendChild(newTransponder);
 }
 
 // Open the sidebar and different paramaters based on window size
