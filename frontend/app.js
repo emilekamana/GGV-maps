@@ -3,6 +3,7 @@
 //   try {
 //     .then(response => {console.log(response.data);return response.data});
 
+
 //     // const transponders = response.data;
 
 //     // console.log(`GET: Here's the list of todos`, todoItems);
@@ -12,36 +13,48 @@
 //     console.error(errors);
 //   }
 // }
-function addMarker(transponder){
-  console.log("Adding marker");
-  const marker = new google.maps.Marker({
-    position:{lat: transponder.latitude, lng: transponder.longitude},
-    map:map,
-    icon:"public/assets/images/icons8-signal-32.png"
-  });
 
-  const circle = new google.maps.Circle({
-    strokeColor: "#FF0000",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: "#FF0000",
-    fillOpacity: 0.35,
-    map,
-    center: {lat: transponder.latitude, lng: transponder.longitude},
-    radius: transponder.radius,
-  });
-}
+
 async function initMap(){
   const transponders = await fetch(`http://localhost:3000/api/transponder`).then(response => response.json())
-  .then(data => {return data});;
-  console.log(transponders)
+  .then(data => {return data});
   if(typeof transponders == 'object' && transponders.length > 0){
+    console.log("first option")
     var options = {
     center: {lat: transponders[0].latitude , lng:transponders[0].longitude },
     zoom: 10
     }
     map = new google.maps.Map(document.getElementById("map"),options)
-    transponders.forEach(addMarker)}else{
+    var infowindow = new google.maps.InfoWindow();
+    transponders.forEach(function(transponder) {
+      const marker = new google.maps.Marker({
+        position:{lat: transponder.latitude, lng: transponder.longitude},
+        map:map,
+        icon:"public/assets/images/icons8-signal-32.png"
+      });
+
+      const circle = new google.maps.Circle({
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        map,
+        center: {lat: transponder.latitude, lng: transponder.longitude},
+        radius: transponder.radius,
+      });
+      google.maps.event.addListener(marker, 'click', (function(marker) {
+        return function() {
+          infowindow.setContent(transponder.latitude + "\u00B0 N," + transponder.longitude + "\u00B0 E");
+          infowindow.open(map, marker);
+        }
+      })(marker));
+  })}else{
+    console.log("second option")
+    var options = {
+      center: {lat: -1.9306 , lng:30.1529 },
+      zoom: 10
+    }
     map = new google.maps.Map(document.getElementById("map"),options)
     infoWindow = new google.maps.InfoWindow();
     if (navigator.geolocation) {
