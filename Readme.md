@@ -41,7 +41,19 @@ CLUSTER=[Cluster_name]
 npm start
 ```
 It should be running on http://localhost:3000/
-
+### Api Enpoints
+* List transponders
+``` 
+get /api/transponder/
+```
+* create transponder
+``` 
+post /api/transponder/
+```
+* delete transponder by id (MongoDB generated id)
+``` 
+delete /api/transponder/:transponderId
+```
 ### Frontend
 * Navigate to the frontend folder
 * Open [index.html](frontend/index.html) in a browser
