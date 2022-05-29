@@ -1,11 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const uiRoutes = require('./routes/uiRoutes')
 const transponderRoutes = require('./routes/transponderRoutes')
 const morgan = require('morgan')
 const swaggerUi = require('swagger-ui-express');
 require('dotenv').config()
-
 
 const app = express()
 // JSON body parser 
@@ -14,6 +14,11 @@ app.use(express.urlencoded({ extended: true}));
 // morgan HTTP logger
 app.use(morgan('tiny'))
 app.set("view engine", "ejs");
+
+app.use(cors({
+  origin: 'http://127.0.0.1:5500',
+  credentials: false,
+}));
 
 var port = process.env.PORT || 3000;
 
