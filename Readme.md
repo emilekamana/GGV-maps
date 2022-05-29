@@ -1,6 +1,6 @@
 # GGV Transponder Map
 #### VanillaJs Frontend for map navigation and NodeJs+MongoDB backend to show markers and area covered on map, MArch 29 2022
-#### [Walkthorugh](https://www.loom.com/share/53e91879adbf473caa4f947a815c5bae)
+#### [Walkthrough](https://www.loom.com/share/53e91879adbf473caa4f947a815c5bae)
 #### [Client link](https://emile-ggv-client.herokuapp.com/)
 #### [Backend link](https://emile-ggv-api.herokuapp.com/)
 #### 
