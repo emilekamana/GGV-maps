@@ -7,10 +7,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   </head>
   <body>
+    <h2 class="text-center">Transponders</h2>
+    
+    <!-- View transponders -->
+    <!-- Check whether there are tranponders gotten from the backend and listing them-->
 
-    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#addModal">
-        New Transponder
-    </button>
     <% var incrementer=0;
     if(typeof transponders == 'object' && transponders.length > 0){
       transponders.forEach(function(transponder) { %>
@@ -18,32 +19,42 @@
       <div class="card-body">
         <div class="row g-0">
           <div class="col-md-10">
+            
+            <!-- Check if the transponder has a name and if not give it an incremented name -->
+
             <% if(transponder.name){ %>
-              <h5 class="card-title"><%= transponder.name %></h5>
+              <h5 class="card-title"><%= transponder.name %></h5> <!-- transponder name-->
             <% }else{%>
               <h5 class="card-title">Transponder <%= incrementer++ %></h5>
               <% }%>
+              <!-- transponder details -->
             <p class="card-text">latitude: <%= transponder.latitude %> <br>longitude: <%= transponder.longitude %> <br>radius: <%= transponder.radius %> </p>
           </div>
           <div class="col-md-2 my-auto">
+            <!-- delete transponder -->
             <a href="/<%= transponder.id %>" class="btn btn-outline-danger"> <img src="/assets/images/icons8-delete-30.png" alt=""></a>
           </div>
         </div>
       </div>
     </div>
     <% })}else{ %>
-      <div class="card text-bg-light mt-2 mb-2 mx-auto" style="max-width: 70vw;">
-        <div class="card-body">
-          <h5>No transponder instances created yet</h5>
-        </div>
+
+      <!-- Message in case there are no transponders -->
+
+    <div class="card text-bg-light mt-2 mb-2 mx-auto" style="max-width: 70vw;">
+      <div class="card-body">
+        <h5>No transponder instances created yet</h5>
       </div>
-      <% } %>
+    </div>
+    <% } %>
+  
+    <!-- Model with a form to create a new transponder -->
 
     <div id="addModal" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Modal title</h5>
+              <h5 class="modal-title">New transponder</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -61,6 +72,12 @@
           </div>
         </div>
       </div>
+
+      <!-- Trigger button to view the model -->
+
+      <button type="button" class="btn btn-primary position-absolute fs-6 p-1 text-wrap top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#addModal">
+        Add New
+    </button>
       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
   </body>

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Mongo db schema for a transponder with its attributes
 const TransponderSchema = new mongoose.Schema({
     name: {
         type: String,

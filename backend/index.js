@@ -1,3 +1,4 @@
+// Import required libraries
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -13,14 +14,14 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}));
 // morgan HTTP logger
 app.use(morgan('tiny'))
+// view engine to render
 app.set("view engine", "ejs");
 
+// setup cors to provide access/make the the api public
 app.use(cors({
-  origin: 'http://127.0.0.1:5500',
+  origin: '*',
   credentials: false,
 }));
-
-var port = process.env.PORT || 3000;
 
 //Connect to the database
 mongoose.connect(
@@ -31,16 +32,22 @@ mongoose.connect(
     }
   );
   
-  // test MongoDB connection
-  const db = mongoose.connection;
-  db.on("error", console.error.bind(console, "connection error: "));
-  db.once("open", function () {
-    console.log("Connected successfully");
-  });
-app.use("/api/transponder", transponderRoutes);
+// Test MongoDB connection
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+  console.log("Connected successfully");
+});
 
+// Add routes to express
+app.use("/api/transponder", transponderRoutes);
 app.use("/", uiRoutes)
+
+// Set folder for static files
 app.use(express.static('public'));
+
+// Start the app on port 3000 locally or server set port on deployment
+var port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
 })

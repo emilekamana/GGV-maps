@@ -10,6 +10,8 @@ async function initMap(){
   }
   map = new google.maps.Map(document.getElementById("map"),options)
 
+  newTransponder = document.createElement('div');
+
   if(typeof transponders == 'object' && transponders.length > 0){
     console.log("first option")
     map.setCenter({lat: transponders[0].latitude , lng:transponders[0].longitude });
@@ -44,7 +46,7 @@ async function initMap(){
       if(!transponder.name){
         transponder.name = "Transponder " + (incrementer++);
       }
-      newTransponder = document.createElement('div');
+
       newTransponder.innerHTML =`<div class="card text-bg-light mt-2 mb-2 mx-auto" style="max-width: 95%;">
         <div class="card-body">
           <h5 class="card-title">${transponder.name}</h5>
@@ -61,6 +63,14 @@ async function initMap(){
         document.getElementById('transponders').appendChild(newTransponder);
       
   })
+  }else{
+  newTransponder.innerHTML =`<div class="card text-bg-light mt-2 mb-2 mx-auto" style="max-width: 95%;">
+        <div class="card-body">
+          <p class="card-text">No transponders added yet!</p>
+        </div>
+        </div>
+        `
+  document.getElementById('transponders').appendChild(newTransponder);
   }
 }
 

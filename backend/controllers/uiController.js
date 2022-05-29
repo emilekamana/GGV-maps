@@ -1,14 +1,18 @@
 const _ = require('lodash');
 const transponderModel = require('../models/transponder')
+/*
+ New controller for rendering the ui to interact with the database 
+with all routes redirecting to the homepage
+*/
 
 // Return list of all transponders
 exports.list_transponders = async (req, res) => {
     const transponders = await transponderModel.find({});
     try {
         res.render("index", {"transponders": transponders});
-      } catch (error) {
+    } catch (error) {
         res.status(500).send(error);
-      }
+    }
 };
 
 
@@ -30,7 +34,7 @@ exports.create_transponder = async (req, res) => {
     }
 };
 
-// Delete a transponder
+// Delete a transponder given its id as parameter
 exports.delete_transponder = async (req,res) =>{
     try{
         const transponderId = req.params.transponderId
