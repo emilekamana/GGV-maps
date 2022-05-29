@@ -40,17 +40,6 @@ mongoose.connect(
 app.use("/api/transponder", transponderRoutes);
 
 app.use("/", uiRoutes)
-// app.get('/', (req, res) => {
-//     // res.send('ok');
-//     const transponders = await transponderModel.find({});
-//     try {
-//         res.render("index", {"transponders": transponders});
-//         // res.send();
-//       } catch (error) {
-//         res.status(500).send(error);
-//       }
-    
-// });
 app.use(express.static('public'));
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
