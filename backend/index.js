@@ -5,7 +5,6 @@ const cors = require('cors')
 const uiRoutes = require('./routes/uiRoutes')
 const transponderRoutes = require('./routes/transponderRoutes')
 const morgan = require('morgan')
-const swaggerUi = require('swagger-ui-express');
 require('dotenv').config()
 
 const app = express()
