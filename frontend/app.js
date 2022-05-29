@@ -17,7 +17,9 @@
 
 async function initMap(){
   const transponders = await fetch(`http://localhost:3000/api/transponder`).then(response => response.json())
-  .then(data => {return data});
+  .then(data => {return data}).catch((error) => {
+    console.error('Error:', error);
+  });;
   if(typeof transponders == 'object' && transponders.length > 0){
     console.log("first option")
     var options = {
@@ -26,12 +28,14 @@ async function initMap(){
     }
     map = new google.maps.Map(document.getElementById("map"),options)
     var infowindow = new google.maps.InfoWindow();
+    markers = []
     transponders.forEach(function(transponder) {
       const marker = new google.maps.Marker({
         position:{lat: transponder.latitude, lng: transponder.longitude},
         map:map,
         icon:"public/assets/images/icons8-signal-32.png"
       });
+
 
       const circle = new google.maps.Circle({
         strokeColor: "#FF0000",
@@ -49,7 +53,8 @@ async function initMap(){
           infowindow.open(map, marker);
         }
       })(marker));
-  })}else{
+  }) 
+  }else{
     console.log("second option")
     var options = {
       center: {lat: -1.9306 , lng:30.1529 },
@@ -57,27 +62,27 @@ async function initMap(){
     }
     map = new google.maps.Map(document.getElementById("map"),options)
     infoWindow = new google.maps.InfoWindow();
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            infoWindow.setPosition(pos);
-            infoWindow.setContent("Location found.");
-            infoWindow.open(map);
-            map.setCenter(pos);
-          },
-          () => {
-            handleLocationError(true, infoWindow, map.getCenter());
-            console.log("Not located");
-          }
-        );
-      } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-      }
+    // if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(
+    //       (position) => {
+    //         const pos = {
+    //           lat: position.coords.latitude,
+    //           lng: position.coords.longitude,
+    //         };
+    //         infoWindow.setPosition(pos);
+    //         infoWindow.setContent("Location found.");
+    //         infoWindow.open(map);
+    //         map.setCenter(pos);
+    //       },
+    //       () => {
+    //         handleLocationError(true, infoWindow, map.getCenter());
+    //         console.log("Not located");
+    //       }
+    //     );
+    //   } else {
+    //     // Browser doesn't support Geolocation
+    //     handleLocationError(false, infoWindow, map.getCenter());
+    //   }
   }
   // map = new google.maps.Map(document.getElementById("map"),options)
   //   // Map option
