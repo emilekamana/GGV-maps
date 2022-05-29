@@ -51,12 +51,12 @@ async function initMap(){
       });
       google.maps.event.addListener(marker, 'click', (function(marker) {
         return function() {
-          infowindow.setContent(transponder.latitude + "\u00B0 N," + transponder.longitude + "\u00B0 E");
+          infowindow.setContent(transponder.name+ "<br>" +transponder.latitude + "\u00B0 N," + transponder.longitude + "\u00B0 E");
           infowindow.open(map, marker);
         }
       })(marker));
       if(!transponder.name){
-        transponder.name = "Transponder" + (incrementer++);
+        transponder.name = "Transponder " + (incrementer++);
       }
       newTransponder = document.createElement('div');
       newTransponder.innerHTML =`<div class="card text-bg-light mt-2 mb-2 mx-auto" style="max-width: 95%;">
@@ -66,7 +66,20 @@ async function initMap(){
         </div>
         </div>
         `
-      document.getElementById('transponders').appendChild(newTransponder);
+        // newTransponder.addListener(marker, 'click', (function(marker) {
+        //   return function() {
+        //     infowindow.setContent(transponder.latitude + "\u00B0 N," + transponder.longitude + "\u00B0 E");
+        //     infowindow.open(map, marker);
+        //   }
+        // })(marker));
+        newTransponder.addEventListener("click", function(){
+          infowindow.setContent(transponder.name+ "<br>" +transponder.latitude + "\u00B0 N," + transponder.longitude + "\u00B0 E");
+          infowindow.open(map, marker);
+          map.setCenter({lat: transponder.latitude, lng: transponder.longitude});
+          close_sidebar();
+        }, false);
+        document.getElementById('transponders').appendChild(newTransponder);
+      
   })
   }else{
     console.log("second option")
@@ -150,12 +163,20 @@ async function initMap(){
 }
 
 function open_sidebar() {
+  var breakpoint = window.matchMedia("(max-width: 700px)")
+  if(breakpoint.matches){
+    document.getElementById("sidebar").style.width = "100%";
+    document.getElementById("main").style.display = "none";
+  }
   document.getElementById("sidebar").style.display = "block";
   document.getElementById("openNav").style.display = 'none';
+  
 }
 
 function close_sidebar() {
+  document.getElementById("main").style.display = "initial";
   document.getElementById("sidebar").style.display = "none";
+  document.getElementById("sidebar").style.width = "25%";
   document.getElementById("openNav").style.display = "inline-block";
 }
 
